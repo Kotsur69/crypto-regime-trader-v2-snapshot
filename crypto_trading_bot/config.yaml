@@ -1,0 +1,593 @@
+# ============================================
+# CRYPTO TRADING BOT - KONFIGURACJA
+# ============================================
+# UWAGA: To jest plik przykładowy. Skopiuj go jako config_local.yaml
+# i wypełnij swoimi danymi. Nigdy nie commituj prawdziwych kluczy API!
+
+# -----------------------------------------
+# BINANCE API CONFIGURATION
+# -----------------------------------------
+binance:
+  # Uzyskaj klucze z: https://testnet.binance.vision/
+  api_key: "YOUR_TESTNET_API_KEY"
+  api_secret: "YOUR_TESTNET_API_SECRET"
+  
+  # WAŻNE: Zawsze używaj testnet dla developmentu!
+  testnet: true
+  
+  # Endpoints
+  testnet_url: "https://testnet.binance.vision"
+  testnet_ws: "wss://testnet.binance.vision/ws"
+  
+# -----------------------------------------
+# TRADING PAIRS - Pary do handlu (8 par)
+# -----------------------------------------
+# Portfolio allocation: 12.5% per para (100% / 8 par)
+# Total capital: 40,000 USDC -> 5,000 USDC per para
+#
+# Wybrane pary z wysoką płynnością i różnymi charakterystykami:
+trading:
+  pairs:
+    # === TOP TIER - Najwyższa płynność, stabilne ===
+    - "BTCUSDC"    # Bitcoin - benchmark rynku, najwyższa płynność
+    - "ETHUSDC"    # Ethereum - #2 market cap, silne fundamenty
+    
+    # === HIGH CAP - Duża kapitalizacja, dobra płynność ===
+    - "SOLUSDC"    # Solana - szybki blockchain, rosnąca adopcja
+    - "ADAUSDC"    # Cardano - proof-of-stake, stabilny rozwój
+    - "AVAXUSDC"   # Avalanche - DeFi ecosystem, wysoka TPS
+    - "MATICUSDC"  # Polygon - L2 Ethereum, niskie fees
+    
+    # === VOLATILE - Wyższa zmienność, potencjał zysku ===
+    - "XRPUSDC"    # Ripple - legacy coin, wysokie volume
+    - "DOGEUSDC"   # Dogecoin - meme coin, wysoka zmienność
+  
+  # Timeframes: główny i dla potwierdzenia trendu
+  primary_timeframe: "15m"
+  trend_timeframe: "1h"
+  
+  # Kapitał początkowy na parę (USDC)
+  # 40,000 USDC / 8 par = 5,000 USDC per para
+  initial_capital_per_pair: 5000
+  
+  # Alokacja na parę (%)
+  allocation_per_pair_pct: 12.5
+  
+  # Max pozycja jako % kapitału na parę
+  max_position_size_pct: 20
+  
+  # Max jednoczesnych pozycji (zwiększone dla 8 par)
+  max_concurrent_positions: 6
+
+# -----------------------------------------
+# INDICATORS - Parametry wskaźników
+# -----------------------------------------
+indicators:
+  # EMA periods
+  ema_fast: 9
+  ema_medium: 21
+  ema_slow: 50
+  ema_trend: 100
+  
+  # RSI
+  rsi_period: 14
+  rsi_oversold: 30
+  rsi_overbought: 70
+  
+  # Stochastic RSI
+  stoch_rsi_period: 14
+  stoch_rsi_k: 3
+  stoch_rsi_d: 3
+  stoch_rsi_oversold: 20
+  stoch_rsi_overbought: 80
+  
+  # MACD
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  
+  # Volume
+  volume_ma_period: 20
+  volume_spike_multiplier: 1.5
+
+# -----------------------------------------
+# RISK MANAGEMENT - Zarządzanie ryzykiem
+# -----------------------------------------
+risk:
+  # Minimalny stosunek Risk:Reward
+  min_risk_reward: 1.5
+  
+  # Max ryzyko na trade jako % kapitału pary
+  max_risk_per_trade_pct: 2
+  
+  # Max dzienny drawdown jako % całkowitego kapitału
+  max_daily_drawdown_pct: 5
+  
+  # Max liczba trade'ów dziennie (na parę)
+  max_daily_trades_per_pair: 5
+  
+  # Max liczba trade'ów dziennie (łącznie)
+  max_daily_trades_total: 15
+  
+  # Stop Loss - domyślny % jeśli brak struktury
+  default_stop_loss_pct: 2
+  
+  # Take Profit - domyślny % jeśli brak struktury
+  default_take_profit_pct: 3
+  
+  # Trailing stop (aktywacja po % zysku)
+  trailing_stop_activation_pct: 2
+  trailing_stop_distance_pct: 1
+
+# -----------------------------------------
+# PATTERN ANALYSIS - Analiza patternów
+# -----------------------------------------
+patterns:
+  # Minimalna skuteczność patternu (%) aby był aktywny
+  min_pattern_win_rate: 40
+  
+  # Minimalna liczba sample do oceny patternu
+  min_samples_for_evaluation: 10
+  
+  # Pullback do EMA - max odległość w ATR
+  ema_pullback_max_atr: 0.5
+  
+  # Momentum shift - min zmiana MACD histogram
+  momentum_shift_threshold: 0.001
+  
+  # Volume confirmation - min ratio vs MA
+  volume_confirmation_ratio: 1.2
+
+# -----------------------------------------
+# DECISION ENGINE - Silnik decyzyjny
+# -----------------------------------------
+decision:
+  # Minimalny score do otwarcia pozycji (0-100)
+  min_trade_score: 60
+  
+  # Wagi dla różnych czynników
+  weights:
+    trend_alignment: 25
+    pattern_strength: 25
+    risk_reward: 20
+    volume_confirmation: 15
+    momentum: 15
+  
+  # Cooldown między trade'ami na tej samej parze (minuty)
+  trade_cooldown_minutes: 30
+
+# -----------------------------------------
+# LEARNING MODULE - Moduł uczenia się
+# -----------------------------------------
+learning:
+  # Czy włączyć adaptacyjne wyłączanie patternów
+  adaptive_patterns: true
+  
+  # Okres oceny patternów (dni)
+  evaluation_period_days: 7
+  
+  # Ścieżka do zapisywania danych
+  data_path: "./data/learning/"
+  
+  # Zapisuj każdy trade
+  log_all_trades: true
+
+# -----------------------------------------
+# PAPER TRADING - Wirtualny handel
+# -----------------------------------------
+paper_trading:
+  enabled: true
+  
+  # Symulowane opłaty (%)
+  simulated_fee_pct: 0.1
+  
+  # Symulowany slippage (%)
+  simulated_slippage_pct: 0.05
+
+# -----------------------------------------
+# BACKTESTING - Testowanie na historii
+# -----------------------------------------
+backtesting:
+  # Domyślny okres (dni)
+  default_period_days: 30
+  
+  # Ścieżka do raportów
+  reports_path: "./reports/"
+  
+  # Generuj wykresy
+  generate_charts: true
+
+# -----------------------------------------
+# LOGGING - Logowanie
+# -----------------------------------------
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  
+  # Ścieżka do logów
+  log_path: "./logs/"
+  
+  # Max rozmiar pliku logu (MB)
+  max_log_size_mb: 10
+  
+  # Liczba plików backup
+  backup_count: 5
+  
+  # Log do konsoli
+  console_output: true
+
+# -----------------------------------------
+# SAFETY - Bezpieczeństwo
+# -----------------------------------------
+safety:
+  # Emergency stop - zatrzymaj bota przy:
+  emergency_stop:
+    # Utrata więcej niż X% kapitału w ciągu dnia
+    daily_loss_pct: 10
+    
+    # Więcej niż X kolejnych strat
+    consecutive_losses: 5
+    
+    # Anomalia ceny (zmiana > X% w 5min)
+    price_anomaly_pct: 10
+  
+  # Wymuś tylko testnet
+  force_testnet_only: true
+  
+  # Max wartość pojedynczego zlecenia (USDC)
+  max_order_value: 2000
+
+# -----------------------------------------
+# DISCORD - Powiadomienia webhook
+# -----------------------------------------
+discord:
+  # Włącz powiadomienia Discord
+  enabled: false
+  
+  # Webhook URL z Discord (Server Settings > Integrations > Webhooks)
+  # Możesz też ustawić przez zmienną środowiskową: DISCORD_WEBHOOK_URL
+  webhook_url: ""
+  
+  # Nazwa bota w Discord
+  bot_name: "🤖 Crypto Trading Bot"
+  
+  # Avatar URL (opcjonalnie)
+  avatar_url: ""
+  
+  # Mention przy emergency stop (np. "@everyone" lub "<@USER_ID>")
+  mention_on_emergency: ""
+  
+  # Godzina daily summary (0-23)
+  daily_summary_hour: 23
+  
+  # Min interwał między wiadomościami (sekundy)
+  min_interval_seconds: 1
+
+# -----------------------------------------
+# DASHBOARD - Web UI
+# -----------------------------------------
+dashboard:
+  # Włącz dashboard webowy
+  enabled: false
+  
+  # Port (domyślnie 5000)
+  port: 5000
+  
+  # Host (0.0.0.0 = dostępny z zewnątrz)
+  host: "0.0.0.0"
+  
+  # Debug mode (nie używaj w produkcji!)
+  debug: false
+
+# -----------------------------------------
+# TECHNICAL LEVELS - Fibonacci & S/R
+# -----------------------------------------
+technical_levels:
+  # Swing point detection - ile świec po każdej stronie
+  swing_lookback: 5
+  
+  # Min różnica między swing H/L (%)
+  min_swing_distance_pct: 1.0
+  
+  # S/R detection - ile świec do analizy
+  sr_lookback: 100
+  
+  # Tolerancja "dotknięcia" poziomu (%)
+  sr_touch_tolerance_pct: 0.3
+  
+  # Min liczba dotknięć dla poziomu S/R
+  sr_min_touches: 2
+  
+  # Szerokość strefy S/R (%)
+  sr_zone_pct: 0.5
+  
+  # Typ pivot points: standard, fibonacci, camarilla
+  pivot_type: "standard"
+
+# -----------------------------------------
+# MARKET REGIME - Wykrywanie stanu rynku
+# -----------------------------------------
+market_regime:
+  # ADX period
+  adx_period: 14
+  
+  # Bollinger Bands
+  bb_period: 20
+  bb_std: 2.0
+  
+  # Lookback dla percentyli
+  lookback_periods: 100
+  
+  # Progi ADX
+  adx_trend_threshold: 25    # Powyżej = trending
+  adx_strong_trend: 40       # Powyżej = silny trend
+
+# -----------------------------------------
+# ORDER BOOK - Analiza głębokości rynku
+# -----------------------------------------
+orderbook:
+  # Włącz analizę order book
+  enabled: false
+  
+  # Próg whale wall (USDC)
+  whale_threshold_usdc: 100000
+  
+  # Ile poziomów order book pobierać
+  depth_levels: 100
+  
+  # Głębokość analizy (+/- % od ceny)
+  analysis_depth_pct: 2
+  
+  # Min interwał między wywołaniami (sekundy)
+  min_interval_seconds: 10
+
+# -----------------------------------------
+# PORTFOLIO - Zarządzanie portfolio
+# -----------------------------------------
+portfolio:
+  # Włącz dynamiczny rebalancing
+  enabled: false
+  
+  # Min alokacja na parę (%)
+  min_allocation_pct: 15
+  
+  # Max alokacja na parę (%)
+  max_allocation_pct: 35
+  
+  # Interwał rebalancingu (godziny)
+  rebalance_interval_hours: 24
+  
+  # Drawdown trigger dla rebalancingu (%)
+  drawdown_trigger_pct: 5
+  
+  # Drift trigger dla rebalancingu (%)
+  allocation_drift_trigger_pct: 5
+  
+  # Lookback dla performance (dni)
+  performance_lookback_days: 7
+  
+  # Wagi dla composite score
+  weight_performance: 0.35
+  weight_win_rate: 0.25
+  weight_volatility: 0.20
+  weight_correlation: 0.10
+  weight_sharpe: 0.10
+
+# -----------------------------------------
+# ML OPTIMIZER - Optymalizacja parametrów
+# -----------------------------------------
+ml_optimizer:
+  # Włącz ML optimization
+  enabled: false
+  
+  # Użyj XGBoost (jeśli zainstalowany)
+  use_xgboost: true
+  
+  # Walk-forward splits
+  n_splits: 5
+  
+  # Train/test split
+  train_pct: 0.7
+  
+  # Ścieżka do wyników
+  results_path: "./data/ml/"
+  
+  # Grid parametrów do optymalizacji
+  param_grid:
+    ema_fast: [5, 9, 12]
+    ema_medium: [15, 21, 26]
+    ema_slow: [40, 50, 60]
+    rsi_period: [10, 14, 20]
+    rsi_oversold: [25, 30, 35]
+    rsi_overbought: [65, 70, 75]
+    min_risk_reward: [1.2, 1.5, 2.0, 2.5]
+    min_trade_score: [50, 60, 70]
+
+
+
+# -----------------------------------------
+# LLM SENTIMENT - Analiza newsów przez LLM
+# -----------------------------------------
+llm:
+  # Włącz integrację LLM
+  enabled: true
+  
+  # Provider: lm_studio, ollama, openai
+  provider: "lm_studio"
+  
+  # Base URL dla LM Studio (OpenAI compatible API)
+  base_url: "http://localhost:1234/v1"
+  
+  # Model do użycia (zależy od providera)
+  # LM Studio: np. "llama3:8b", "mistral:7b"
+  # Ollama: "llama3:8b", "mistral"
+  model: "llama3:8b"
+  
+  # Timeout dla wywołań LLM (sekundy)
+  timeout: 30
+  
+  # Temperature (0.0 = deterministyczny, 1.0 = kreatywny)
+  temperature: 0.1
+  
+  # Max tokens w odpowiedzi
+  max_tokens: 500
+  
+  # Waga sentymentu w decyzji (0-1)
+  # Docelowo: Technical 60%, ML 25%, LLM 15%
+  sentiment_weight: 0.15
+  
+  # Próg veto - jeśli sentiment < tego, NO TRADE (override)
+  veto_threshold: -0.7
+  
+  # Próg bonusu - jeśli sentiment > tego i technical > 70, +5 points
+  bonus_threshold: 0.6
+
+# -----------------------------------------
+# NEWS FETCHER - Źródła newsów
+# -----------------------------------------
+news:
+  # Włącz pobieranie newsów
+  enabled: true
+  
+  # Źródła newsów do użycia
+  sources:
+    - coindesk
+    - cointelegraph
+    # - cryptopanic  # Wymaga API key
+    # - binance
+  
+  # CryptoPanic API key (opcjonalnie, 200 calls/day free)
+  cryptopanic_api_key: ""
+  
+  # Interwał aktualizacji newsów (sekundy)
+  update_interval: 300  # 5 minut
+  
+  # Ile godzin trzymać newsy w cache
+  cache_hours: 24
+  
+  # Ścieżka do cache newsów
+  cache_path: "./data/news_cache.json"
+
+# -----------------------------------------
+# POSITION SIZING - Kelly Criterion
+# -----------------------------------------
+position_sizing:
+  # Metoda: "kelly" lub "fixed"
+  method: "kelly"
+  
+  kelly:
+    # Włącz Kelly Criterion
+    enabled: true
+    
+    # Użyj Half-Kelly dla bezpieczeństwa (zalecane)
+    use_half_kelly: true
+    
+    # Minimalna liczba trade'ów do kalkulacji Kelly
+    min_trades_required: 20
+    
+    # Częstotliwość aktualizacji (co ile trade'ów)
+    update_frequency: 50
+    
+    # Minimalny % kapitału per trade
+    min_position_pct: 0.5
+    
+    # Maksymalny % kapitału per trade
+    max_position_pct: 5.0
+  
+  fixed:
+    # Fallback jeśli za mało danych lub Kelly wyłączone
+    risk_per_trade: 2.0
+
+# -----------------------------------------
+# PROFIT TAKING - Scale Out
+# -----------------------------------------
+profit_taking:
+  scale_out:
+    # Włącz partial profit taking
+    enabled: true
+    
+    # Poziomy TP z procentami zamknięcia
+    levels:
+      tp1:
+        rr_multiplier: 1.0   # 1x Risk:Reward
+        close_percentage: 50  # Zamknij 50% pozycji
+      tp2:
+        rr_multiplier: 1.5   # 1.5x Risk:Reward
+        close_percentage: 30  # Zamknij 30% pozycji
+      tp3:
+        rr_multiplier: 2.5   # 2.5x Risk:Reward
+        close_percentage: 20  # Zamknij 20% pozycji
+    
+    # Przesuń SL do breakeven po TP1
+    move_sl_to_breakeven_after_tp1: true
+    
+    # Przesuń SL do ceny TP1 po TP2
+    move_sl_to_tp1_after_tp2: true
+
+# -----------------------------------------
+# EXECUTION - Smart Order Execution
+# -----------------------------------------
+execution:
+  # Preferuj LIMIT orders (maker) zamiast MARKET (taker)
+  prefer_maker_orders: true
+  
+  # Timeout dla limit orders (sekundy)
+  limit_order_timeout: 30
+  
+  # Maksymalny spread % - skip trade jeśli wyższy
+  max_spread_pct: 0.1
+  
+  # Tracking slippage
+  track_slippage: true
+  
+  # VIP Tier (0=regular, 1=VIP1 >$1M, 2=VIP2 >$10M)
+  vip_tier: 0
+
+# -----------------------------------------
+# ADDITIONAL PAIRS - Sugestie
+# -----------------------------------------
+# Aby dodać nowe pary, edytuj sekcję trading.pairs powyżej
+# Sugerowane pary z wysoką płynnością:
+#
+# Top tier (high liquidity):
+#   - SOLUSDC   # Solana
+#   - ADAUSDC   # Cardano
+#   - AVAXUSDC  # Avalanche
+#   - MATICUSDC # Polygon
+#
+# Mid tier (good liquidity):
+#   - LINKUSDC  # Chainlink
+#   - DOTUSDC   # Polkadot
+#   - UNIUSDC   # Uniswap
+#   - ATOMUSDC  # Cosmos
+#
+# Volatile (higher risk/reward):
+#   - SHIBUSDC  # Shiba Inu
+#   - PEPEUSDC  # Pepe
+#
+# Sprawdź dostępność na Binance przed dodaniem!
+# Min volume: >$10M/day zalecane
+
+# -----------------------------------------
+# VWAP - Volume Weighted Average Price
+# -----------------------------------------
+vwap:
+  # Włącz obliczanie VWAP
+  enabled: true
+  
+  # Godziny rozpoczęcia sesji (UTC)
+  sessions:
+    asian: "00:00"      # Tokyo open
+    european: "09:00"   # London open
+    us: "15:30"         # NYSE open
+  
+  # Użyj VWAP w analizie breakoutów
+  use_in_breakouts: true
+  
+  # Włącz pattern VWAP_BOUNCE
+  bounce_pattern_enabled: true
+  
+  # Tolerancja "dotknięcia" VWAP (%)
+  touch_tolerance_pct: 0.2
+  
+  # Wymagany mnożnik volume dla bounce
+  bounce_volume_multiplier: 1.3

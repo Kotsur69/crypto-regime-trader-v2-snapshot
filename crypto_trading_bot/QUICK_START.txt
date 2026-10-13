@@ -1,0 +1,94 @@
+╔══════════════════════════════════════════════════════════════╗
+║           CRYPTO TRADING BOT - QUICK START                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+KROK 1: SPRAWDZ STATUS
+═══════════════════════════════════════════════════════════════
+
+Kliknij dwukrotnie:
+→ check_status.bat
+
+Zobaczysz:
+- Jaki tryb jest aktywny (learning/optimization/production)
+- Czy bot jest uruchomiony
+- Otwarte pozycje
+- Emergency stop status
+- Wszystko w jednym miejscu!
+
+
+KROK 2: URUCHOM BOTA
+═══════════════════════════════════════════════════════════════
+
+Kliknij dwukrotnie:
+→ run_bot.bat
+
+Zobaczysz:
+- Logi bota w czasie rzeczywistym
+- Analizowane pary
+- Otwierane pozycje
+- Wszystko dziala!
+
+Zeby zatrzymac:
+- Nacisnij Ctrl + C
+- Lub zamknij okno
+
+
+KROK 3: MONITORUJ (opcjonalnie)
+═══════════════════════════════════════════════════════════════
+
+Podczas gdy bot dziala, mozesz sprawdzic:
+
+→ check_status.bat (w nowym oknie)
+→ check_learning_progress.bat (postep uczenia sie)
+→ dashboard: http://localhost:5000 (w przegladarce)
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                    TO WSZYSTKO!                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+NIE UZYWAJ Visual Studio do uruchamiania bota!
+Uzywaj tylko plikow .bat (kliknij dwukrotnie)
+
+Visual Studio sluzy tylko do EDYCJI kodu, nie do uruchamiania.
+
+
+NAJCZESTSZE PYTANIA:
+═══════════════════════════════════════════════════════════════
+
+Q: Jaki tryb jest aktywny?
+A: Kliknij check_status.bat - zobaczysz na gorze
+
+Q: Czy bot jest uruchomiony?
+A: Kliknij check_status.bat - zobaczysz "Bot Status"
+
+Q: Jak zmienic tryb?
+A: Kliknij switch_phase.bat
+
+Q: Jak zamknac pozycje?
+A: Kliknij close_position.bat
+
+Q: Jak zresetowac emergency stop?
+A: Kliknij resume_trading.bat
+
+
+WSZYSTKIE PLIKI .BAT:
+═══════════════════════════════════════════════════════════════
+
+check_status.bat           - Sprawdz wszystko
+run_bot.bat                - Uruchom bota
+switch_phase.bat           - Zmien tryb (learning/optimization/production)
+check_learning_progress.bat - Postep uczenia sie
+close_position.bat         - Zamknij pozycje
+close_all_positions.bat    - Zamknij wszystkie pozycje
+resume_trading.bat         - Wznow trading (reset emergency stop)
+adjust_limits.bat          - Zmien limity
+
+
+POMOC:
+═══════════════════════════════════════════════════════════════
+
+Jesli cos nie dziala:
+1. Sprawdz logi: logs/bot.log
+2. Sprawdz status: check_status.bat
+3. Zrestartuj bota: Ctrl+C, potem run_bot.bat

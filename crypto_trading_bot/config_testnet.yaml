@@ -1,0 +1,373 @@
+# ============================================
+# CRYPTO TRADING BOT - TESTNET CONFIG
+# ============================================
+# UWAGA: Ten plik jest dla Binance TESTNET!
+# Testnet uzywa par USDT (nie USDC!)
+# Mainnet bedzie uzywal USDC jak planowano.
+
+# -----------------------------------------
+# BINANCE API CONFIGURATION - TESTNET
+# -----------------------------------------
+binance:
+  # Uzyskaj klucze z: https://testnet.binance.vision/
+  api_key: "YOUR_TESTNET_API_KEY"
+  api_secret: "YOUR_TESTNET_API_SECRET"
+  
+  # WAZNE: To jest konfiguracja TESTNET
+  testnet: true
+  
+  # Endpoints - TESTNET
+  testnet_url: "https://testnet.binance.vision"
+  testnet_ws: "wss://testnet.binance.vision/ws"
+
+# -----------------------------------------
+# TRADING PAIRS - Pary USDT (Testnet)
+# -----------------------------------------
+# UWAGA: Binance Testnet NIE MA par USDC!
+# Uzywamy USDT dla testowania.
+# Mainnet bedzie mial pary USDC.
+trading:
+  pairs:
+    # === TOP TIER - Najwyzsza plynnosc ===
+    - "BTCUSDT"    # Bitcoin - benchmark rynku
+    - "ETHUSDT"    # Ethereum - #2 market cap
+    
+    # === HIGH CAP - Duza kapitalizacja ===
+    - "SOLUSDT"    # Solana - szybki blockchain
+    - "ADAUSDT"    # Cardano - proof-of-stake
+    - "AVAXUSDT"   # Avalanche - DeFi ecosystem
+    - "MATICUSDT"  # Polygon - L2 Ethereum
+    
+    # === VOLATILE - Wyzsza zmiennosc ===
+    - "XRPUSDT"    # Ripple - legacy coin
+    - "DOGEUSDT"   # Dogecoin - meme coin
+  
+  # Timeframes
+  primary_timeframe: "15m"
+  trend_timeframe: "1h"
+  
+  # Kapital poczatkowy na pare (USDT dla testnet)
+  initial_capital_per_pair: 5000
+  
+  # Alokacja na pare (%)
+  allocation_per_pair_pct: 12.5
+  
+  # Max pozycja jako % kapitalu na pare
+  max_position_size_pct: 20
+  
+  # Max jednoczesnych pozycji
+  max_concurrent_positions: 6
+
+# -----------------------------------------
+# CAPITAL PER PAIR - USDT (Testnet)
+# -----------------------------------------
+capital_per_pair:
+  BTCUSDT: 10000
+  ETHUSDT: 10000
+  SOLUSDT: 5000
+  ADAUSDT: 5000
+  AVAXUSDT: 5000
+  MATICUSDT: 5000
+  XRPUSDT: 5000
+  DOGEUSDT: 5000
+
+# -----------------------------------------
+# INDICATORS - Parametry wskaznikow
+# -----------------------------------------
+indicators:
+  ema_fast: 9
+  ema_medium: 21
+  ema_slow: 50
+  ema_trend: 100
+  
+  rsi_period: 14
+  rsi_oversold: 30
+  rsi_overbought: 70
+  
+  stoch_rsi_period: 14
+  stoch_rsi_k: 3
+  stoch_rsi_d: 3
+  stoch_rsi_oversold: 20
+  stoch_rsi_overbought: 80
+  
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  
+  volume_ma_period: 20
+  volume_spike_multiplier: 1.5
+
+# -----------------------------------------
+# RISK MANAGEMENT
+# -----------------------------------------
+risk:
+  min_risk_reward: 1.5
+  max_risk_per_trade_pct: 2
+  max_daily_drawdown_pct: 5
+  max_daily_trades_per_pair: 20
+  max_daily_trades_total: 50
+  default_stop_loss_pct: 2
+  default_take_profit_pct: 3
+  trailing_stop_activation_pct: 2
+  trailing_stop_distance_pct: 1
+
+# -----------------------------------------
+# PATTERN ANALYSIS
+# -----------------------------------------
+patterns:
+  min_pattern_win_rate: 40
+  min_samples_for_evaluation: 10
+  ema_pullback_max_atr: 0.5
+  momentum_shift_threshold: 0.001
+  volume_confirmation_ratio: 1.2
+
+# -----------------------------------------
+# DECISION ENGINE
+# -----------------------------------------
+decision:
+  min_trade_score: 60
+  
+  weights:
+    trend_alignment: 25
+    pattern_strength: 25
+    risk_reward: 20
+    volume_confirmation: 15
+    momentum: 15
+  
+  trade_cooldown_minutes: 30
+
+# -----------------------------------------
+# LEARNING MODULE
+# -----------------------------------------
+learning:
+  adaptive_patterns: true
+  evaluation_period_days: 7
+  data_path: "./data/learning/"
+  log_all_trades: true
+
+# -----------------------------------------
+# PAPER TRADING - Wlaczone dla TESTNET
+# -----------------------------------------
+paper_trading:
+  enabled: true
+  simulated_fee_pct: 0.1
+  simulated_slippage_pct: 0.05
+
+# -----------------------------------------
+# BACKTESTING
+# -----------------------------------------
+backtesting:
+  default_period_days: 30
+  reports_path: "./reports/"
+  generate_charts: true
+
+# -----------------------------------------
+# LOGGING
+# -----------------------------------------
+logging:
+  level: "INFO"
+  log_path: "./logs/"
+  max_log_size_mb: 10
+  backup_count: 5
+  console_output: true
+
+# -----------------------------------------
+# SAFETY - TESTNET ONLY
+# -----------------------------------------
+safety:
+  emergency_stop:
+    daily_loss_pct: 10
+    consecutive_losses: 50
+    price_anomaly_pct: 10
+  
+  # WYMUSZONY TESTNET
+  force_testnet_only: true
+  
+  max_order_value: 2000
+
+# -----------------------------------------
+# DISCORD - Powiadomienia
+# -----------------------------------------
+discord:
+  enabled: true
+  webhook_url: ""  # set your own Discord webhook here (never commit it)
+  bot_name: "[TEST] Crypto Trading Bot"
+  avatar_url: ""
+  mention_on_emergency: ""
+  daily_summary_hour: 23
+  min_interval_seconds: 1
+
+# -----------------------------------------
+# DASHBOARD
+# -----------------------------------------
+dashboard:
+  enabled: false
+  port: 5000
+  host: "0.0.0.0"
+  debug: false
+
+# -----------------------------------------
+# TECHNICAL LEVELS
+# -----------------------------------------
+technical_levels:
+  swing_lookback: 5
+  min_swing_distance_pct: 1.0
+  sr_lookback: 100
+  sr_touch_tolerance_pct: 0.3
+  sr_min_touches: 2
+  sr_zone_pct: 0.5
+  pivot_type: "standard"
+
+# -----------------------------------------
+# MARKET REGIME
+# -----------------------------------------
+market_regime:
+  adx_period: 14
+  bb_period: 20
+  bb_std: 2.0
+  lookback_periods: 100
+  adx_trend_threshold: 25
+  adx_strong_trend: 40
+
+# -----------------------------------------
+# ORDER BOOK
+# -----------------------------------------
+orderbook:
+  enabled: false
+  whale_threshold_usdc: 100000
+  depth_levels: 100
+  analysis_depth_pct: 2
+  min_interval_seconds: 10
+
+# -----------------------------------------
+# PORTFOLIO
+# -----------------------------------------
+portfolio:
+  enabled: false
+  min_allocation_pct: 15
+  max_allocation_pct: 35
+  rebalance_interval_hours: 24
+  drawdown_trigger_pct: 5
+  allocation_drift_trigger_pct: 5
+  performance_lookback_days: 7
+  weight_performance: 0.35
+  weight_win_rate: 0.25
+  weight_volatility: 0.20
+  weight_correlation: 0.10
+  weight_sharpe: 0.10
+
+# -----------------------------------------
+# ML OPTIMIZER
+# -----------------------------------------
+ml_optimizer:
+  enabled: false
+  use_xgboost: true
+  n_splits: 5
+  train_pct: 0.7
+  results_path: "./data/ml/"
+
+# -----------------------------------------
+# LLM SENTIMENT
+# -----------------------------------------
+llm:
+  enabled: false
+  provider: "lm_studio"
+  base_url: "http://localhost:1234/v1"
+  model: "llama3:8b"
+  timeout: 30
+  temperature: 0.1
+  max_tokens: 500
+  sentiment_weight: 0.15
+  veto_threshold: -0.7
+  bonus_threshold: 0.6
+
+# -----------------------------------------
+# NEWS FETCHER
+# -----------------------------------------
+news:
+  enabled: false
+  sources:
+    - coindesk
+    - cointelegraph
+  cryptopanic_api_key: ""
+  update_interval: 300
+  cache_hours: 24
+  cache_path: "./data/news_cache.json"
+
+# -----------------------------------------
+# POSITION SIZING - Kelly Criterion
+# -----------------------------------------
+position_sizing:
+  method: "kelly"
+  
+  kelly:
+    enabled: true
+    use_half_kelly: true
+    min_trades_required: 20
+    update_frequency: 50
+    min_position_pct: 0.5
+    max_position_pct: 5.0
+  
+  fixed:
+    risk_per_trade: 2.0
+
+# -----------------------------------------
+# PROFIT TAKING - Scale Out
+# -----------------------------------------
+profit_taking:
+  scale_out:
+    enabled: true
+    levels:
+      tp1:
+        rr_multiplier: 1.0
+        close_percentage: 50
+      tp2:
+        rr_multiplier: 1.5
+        close_percentage: 30
+      tp3:
+        rr_multiplier: 2.5
+        close_percentage: 20
+    move_sl_to_breakeven_after_tp1: true
+    move_sl_to_tp1_after_tp2: true
+
+# -----------------------------------------
+# EXECUTION
+# -----------------------------------------
+execution:
+  prefer_maker_orders: true
+  limit_order_timeout: 30
+  max_spread_pct: 0.1
+  track_slippage: true
+  vip_tier: 0
+
+# -----------------------------------------
+# VWAP
+# -----------------------------------------
+vwap:
+  enabled: true
+  sessions:
+    asian: "00:00"
+    european: "09:00"
+    us: "15:30"
+  use_in_breakouts: true
+  bounce_pattern_enabled: true
+  touch_tolerance_pct: 0.2
+  bounce_volume_multiplier: 1.3
+
+# -----------------------------------------
+# LEARNING PHASE
+# -----------------------------------------
+# Bot ma 3 fazy uczenia sie:
+#   1. Learning (7-14 dni) - luzne limity, zbieranie danych
+#   2. Optimization (7 dni) - srednie limity, optymalizacja
+#   3. Production (na zawsze) - scisle limity, bezpieczny trading
+#
+# Przelacz fazy: python switch_phase.py
+# Sprawdz postep: python check_learning_progress.py
+learning_phase:
+  enabled: true
+  phase: "learning"
+  start_date: "2026-02-24"
+  target_trades: 100
+  target_days: 14
+  description: "Learning Phase - zbieranie danych (7-14 dni)"
